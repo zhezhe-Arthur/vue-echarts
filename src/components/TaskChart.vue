@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
    <e-chart id="taskCompletionId" :options='taskCompletionRate' />
+   <e-chart id="taskCompletionId" :options='taskMonthlyReportShow'/>
   </div>
 </template>
 
@@ -8,21 +9,65 @@
 import ECharts from 'vue-echarts'
 import 'echarts/lib/chart/bar' // 柱状图
 import 'echarts/lib/chart/line' // 折线图
+import 'echarts/lib/chart/pie' // 饼图
 import 'echarts/lib/component/tooltip' // 提示框
-export default {  
+import 'echarts/lib/component/title'
+import 'echarts/lib/component/legend'
+import 'echarts/lib/component/polar'
+export default {
   name: 'TaskChart',
   components: {
     'e-chart': ECharts
   },
   data () {
     return {
-      taskCompletionRate: null
+      taskCompletionRate: null,
+      taskMonthlyReport: null
     }
   },
   created: function() {
     this.taskCompletionRateShow()
+    this.taskMonthlyReportShow()
   },
   methods: {
+    taskMonthlyReportShow() {
+      this.taskMonthlyReportShow = {
+        title: {
+          text: '月度任务详情',
+          subtext: '2019年2月任务',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'right',
+          data: ['合格任务', '进行中任务', '不合格任务']
+        },
+        series: [
+          {
+            name: '访问来源',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '60%'],
+            data: [
+              {value: 36, name: '不合格任务'},
+              {value: 360, name: '进行中任务'},
+              {value: 989, name: '合格任务'},
+            ],
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
+      }
+    },
     taskCompletionRateShow() {
       this.taskCompletionRate = {
         tooltip: {
