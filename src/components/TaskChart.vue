@@ -10,7 +10,7 @@ import ECharts from 'vue-echarts'
 import 'echarts/lib/chart/bar' // 柱状图
 import 'echarts/lib/chart/line' // 折线图
 import 'echarts/lib/chart/pie' // 饼图
-import 'echarts/lib/component/tooltip' // 提示框
+import 'echarts/lib/component/tooltip' // 提示框component里的是组件
 import 'echarts/lib/component/title'
 import 'echarts/lib/component/legend'
 import 'echarts/lib/component/polar'
@@ -32,9 +32,10 @@ export default {
   methods: {
     taskMonthlyReportShow() {
       this.taskMonthlyReportShow = {
+        color: ['#c23531','#2f4554', '#61a0a8', '#d48265'], // 调色盘自动获取颜色
         title: {
           text: '月度任务详情',
-          subtext: '2019年2月任务',
+          subtext: '2020年5月任务',
           left: 'center'
         },
         tooltip: {
@@ -43,23 +44,24 @@ export default {
         },
         legend: {
           orient: 'vertical',
-          left: 'right',
+          left: 'insideRight',
           data: ['合格任务', '进行中任务', '不合格任务']
         },
         series: [
           {
-            name: '访问来源',
-            type: 'pie',
-            radius: '55%',
+            name: '月度任务',
+            type: 'pie', // 饼图模式
+            radius: '70%', // 圆饼大小
             center: ['50%', '60%'],
             data: [
               {value: 36, name: '不合格任务'},
               {value: 360, name: '进行中任务'},
               {value: 989, name: '合格任务'},
             ],
-            emphasis: {
+            emphasis: { // 鼠标触摸事件
               itemStyle: {
-                shadowBlur: 10,
+                // color: 'blue', // 颜色
+                shadowBlur: 10, // 阴影
                 shadowOffsetX: 0,
                 shadowColor: 'rgba(0, 0, 0, 0.5)'
               }
@@ -133,10 +135,11 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #taskCompletionId{
-  width: 750px;
+  width: 600px;
   height: 450px;
+  display: inline-block;
+  margin-left: 3%
 }
 </style>
